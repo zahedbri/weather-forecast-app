@@ -26,8 +26,6 @@ if(array_key_exists('zipcode', $zipcode_query)){
 
     $locationData = json_decode($LatLng,true);
 
-    //echo $locationData['results'][0]['formatted_address'];
-
     $lat = $locationData['results'][0]['geometry']['location']['lat'];
     $lon = $locationData['results'][0]['geometry']['location']['lng'];
 
@@ -38,6 +36,8 @@ if(array_key_exists('zipcode', $zipcode_query)){
 
 
 // get forecast
+
+$urlToParse;
 
 if(isset($lat)) {
 
@@ -52,7 +52,6 @@ if(isset($lat)) {
 }
 
 //-----------------------------
-
 
 $url = $urlToParse;
 
@@ -74,26 +73,20 @@ curl_close($ch);
 
 $json_a = json_decode($output,true);
 
-
-
 // <---------- Display Conditions ----------> //
 
 $area = $json_a['location']['areaDescription'];
 $tonight = $json_a['time']['startPeriodName'][0];
 $forecast_text = $json_a['data']['text'][0];
 
-
-
 $forcast_data = "
-            <p>forecast for: $area<p>
+            <p>forcast for: $area<p>
 		    <p>$tonight<p>            
             <p>$forecast_text<p>";
-
 
 // for loop to loop through string and output results
 $day = $json_a['time']['startPeriodName'];
 $text = $json_a['data']['text'];
-
 
 // <--------------------------notes----------------------------->
 // json file -
@@ -101,7 +94,6 @@ $text = $json_a['data']['text'];
 // reference this - http://stackoverflow.com/questions/36356334/parsing-national-weather-service-json-with-php?noredirect=1&lq=1
 
 ?>
-
 
 <!doctype html>
 <html>
@@ -149,8 +141,6 @@ $text = $json_a['data']['text'];
 <div>
     <h1>Example Domain</h1>
     <p>get weather forecast</p>
-
-
 
     <form action="" method="get">
         <label for="zipcode"> Enter zipcode:</label>
